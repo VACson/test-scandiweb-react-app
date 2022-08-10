@@ -1,0 +1,23 @@
+.currencies {
+  margin: 0 10px;
+  width: 30px;
+  cursor: pointer;
+  &__arrow {
+    transform: scaleY(66%);
+    margin-left: 3px;
+  }
+  &__popup {
+    position: absolute;
+    box-shadow: 0px 0px 20px #ccc;
+    background-color: #fff;
+    // padding: 20px;
+    top: 10%;
+    &__item {
+      box-sizing: border-box;
+      padding: 20px;
+      &:hover {
+        background-color: #eee;
+      }
+    }
+  }
+}

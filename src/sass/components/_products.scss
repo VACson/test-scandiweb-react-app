@@ -1,21 +1,39 @@
 .product-list {
   display: flex;
   flex-flow: row wrap;
+  justify-content: space-between;
   &--item {
     width: 33%;
+    max-width: 386px;
+    height: 444px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
+    padding: 16px;
   }
 }
 .product-block {
   width: 100%;
-  padding: auto;
   &--img {
     object-fit: cover;
-    width: 100%;
+    width: 354px;
+    margin: 0 auto;
+    height: 330px;
   }
   &--text {
     margin-top: auto;
+  }
+}
+.product {
+  &__cartbutton {
+    margin-left: 80%;
+    margin-top: -30px;
+  }
+  &__description {
+    font-size: 18px;
+    line-height: 160%;
+    &__price {
+      font-weight: 500;
+    }
   }
 }

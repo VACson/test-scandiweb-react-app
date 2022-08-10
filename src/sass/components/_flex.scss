@@ -1,0 +1,16 @@
+.flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  height: 100%;
+  &-row {
+    flex-direction: row;
+  }
+  &--nwrap {
+    flex-wrap: nowrap;
+  }
+  &--wrap {
+    flex-wrap: wrap;
+  }
+}

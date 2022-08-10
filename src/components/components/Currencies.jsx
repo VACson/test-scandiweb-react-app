@@ -1,42 +1,32 @@
-import React from 'react';
-import { PureComponent } from 'react';
-import { ALL_CURRENCIES } from '../../apollo/currencies';
-import { Query } from 'react-apollo';
+import React, { PureComponent } from 'react';
+import { gql } from 'apollo-boost';
+import { graphql } from 'react-apollo';
+import Currency from './Currency';
+
+const getBooksQuery = gql`
+  {
+    currencies {
+      label
+      symbol
+    }
+  }
+`;
 
 class Currencies extends PureComponent {
-  constructor({ currencies }) {
-    console.log('TCL: Currencies -> constructor -> currencies', currencies);
-    super();
-    this.currencies = currencies;
-  }
+  displayCurrencies() {
+    var data = this.props.data;
 
-  componentDidUpdate({ data }) {
-    console.log('TCL: componentDidUpdate -> data', data);
+    if (data.loading) {
+      return <div>Loading books...</div>;
+    } else {
+      return data.currencies.map((currency, index) => {
+        return <Currency currency={currency} key={index} symbolIndex={index} />;
+      });
+    }
   }
   render() {
-    return (
-      <>
-        {this.currencies.map((currency) => (
-          <div className="123" key={currency.label}>
-            {currency.label}
-          </div>
-        ))}
-      </>
-    );
+    return <div>{this.displayCurrencies()}</div>;
   }
 }
 
-class CurrenciesWithQuery extends PureComponent {
-  render() {
-    return (
-      <Query query={ALL_CURRENCIES}>
-        {({ data, loading }) => {
-          if (loading) return null; // add loader
-          return <Currencies currencies={data.currencies} />;
-        }}
-      </Query>
-    );
-  }
-}
-
-export default CurrenciesWithQuery;
+export default graphql(getBooksQuery)(Currencies);
