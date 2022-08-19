@@ -42,7 +42,7 @@ class ProductListClothes extends PureComponent {
     var data = this.props.data;
     console.log(this.props.data);
     if (data.loading) {
-      return <div>Loading books...</div>;
+      return <div>Loading products...</div>;
     } else {
       return data.category.products.map((product, index) => {
         return <Product product={product} key={index} />;

@@ -3,10 +3,11 @@ import logo from '../../assets/img/Group.svg';
 import cart from '../../assets/img/EmptyCart.svg';
 import Currencies from './Currencies';
 
-import { Link, Outlet } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectCategory } from '../../redux/slices/selectCategorySlice';
 import { selectCurrency } from '../../redux/slices/selectCurrencySlice';
+
 import { PureComponent } from 'react';
 
 class Header extends PureComponent {
@@ -20,8 +21,14 @@ class Header extends PureComponent {
     const categoryNames = ['ALL', 'CLOTHES', 'TECH'];
     const chooseCurrency = ['$', '£', 'A$', '¥', '₽'];
     const selectedCategory = this.props.selectCategorySlice.value;
-    // const selectedCurrency = this.props.selectCurrencySlice.value;
     // console.log(this.props);
+
+    // const incrementCartItem = (item) => {
+    //   this.props.selectCategory({
+    //     ...item,
+    //     count: item.count + 1
+    //   })
+    // }
 
     return (
       <div>
@@ -29,14 +36,15 @@ class Header extends PureComponent {
           <ul className="flex flex-row">
             {categoryNames &&
               categoryNames.map((name, index) => (
-                <li
+                <Link
+                  to="/"
                   className={
                     selectedCategory === index ? 'header--item header--item-active' : 'header--item'
                   }
-                  onClick={() => this.props.selectCategory(index)}
-                  key={`${name}_${index}`}>
-                  {name}
-                </li>
+                  key={`${name}_${index}`}
+                  onClick={() => this.props.selectCategory(index)}>
+                  <li>{name}</li>
+                </Link>
               ))}
           </ul>
           <img className="header--item header--item--logo" src={logo} width="32" alt="mainlogo" />
@@ -53,7 +61,6 @@ class Header extends PureComponent {
             </Link>
           </div>
         </header>
-        <Outlet />
       </div>
     );
   }
@@ -62,6 +69,7 @@ class Header extends PureComponent {
 const mapStateToProps = (state) => ({
   selectCategorySlice: state.selectCategorySlice,
   selectCurrencySlice: state.selectCurrencySlice,
+  cartSlice: state.cartSlice,
 });
 const mapDispatchToProps = () => ({ selectCategory, selectCurrency });
 

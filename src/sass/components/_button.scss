@@ -1,0 +1,15 @@
+.button {
+  border-radius: 0;
+  outline: none;
+  border: none;
+  background-color: #fff;
+  &__addToCart {
+    width: 100%;
+    background-color: #5ece7b;
+    height: 52px;
+    padding: 16px 32px;
+    color: #fff;
+    margin-top: 20px;
+    margin-bottom: 40px;
+  }
+}

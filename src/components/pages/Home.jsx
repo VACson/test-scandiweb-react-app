@@ -7,7 +7,6 @@ import { selectCurrency } from '../../redux/slices/selectCurrencySlice';
 
 class Home extends PureComponent {
   render() {
-    // console.log(this.props, 'scs');
     const selectedCategory = this.props.selectCategorySlice.value;
     return (
       <>

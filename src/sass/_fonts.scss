@@ -33,6 +33,39 @@
   font-weight: 800;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url('./fonts/RobotoCondensed-Bold.ttf');
+  src: local('./fonts/RobotoCondensed Bold'), local('RobotoCondensed-Bold'),
+    url('./fonts/RobotoCondensed-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url('./fonts/RobotoCondensed-Regular.ttf');
+  src: local('./fonts/RobotoCondensed Regular'), local('RobotoCondensed-Regular'),
+    url('./fonts/RobotoCondensed-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Roboto Condensed';
+  src: url('./fonts/RobotoCondensed-Light.ttf');
+  src: local('./fonts/RobotoCondensed Light'), local('RobotoCondensed-Light'),
+    url('./fonts/RobotoCondensed-Light.ttf') format('truetype');
+  font-weight: lighter;
+  font-style: normal;
+}
+
+.roboto {
+  font-family: 'Roboto Condensed';
+  font-style: normal;
+}
+
 .fw {
   &-300 {
     font-weight: 300;
@@ -51,6 +84,18 @@
   }
 }
 .fs {
+  &-16 {
+    font-size: 16px;
+  }
+  &-18 {
+    font-size: 18px;
+  }
+  &-24 {
+    font-size: 24px;
+  }
+  &-30 {
+    font-size: 30px;
+  }
   &-36 {
     font-size: 36px;
   }

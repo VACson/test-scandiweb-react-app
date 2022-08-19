@@ -42,7 +42,7 @@ class ProductListTech extends PureComponent {
     var data = this.props.data;
 
     if (data.loading) {
-      return <div>Loading books...</div>;
+      return <div>Loading products...</div>;
     } else {
       return data.category.products.map((product, index) => {
         return <Product product={product} key={index} />;
@@ -59,16 +59,4 @@ class ProductListTech extends PureComponent {
   }
 }
 
-// class ProductsWithQuery extends PureComponent {
-//   render() {
-//     return (
-//       <Query query={ALL_TECH}>
-//         {({ data, loading }) => {
-//           if (loading) return null;
-//           return <ProductListTech category={data.category} />;
-//         }}
-//       </Query>
-//     );
-//   }
-// }
 export default graphql(getProductsQuery)(ProductListTech);

@@ -2,3 +2,13 @@
   text-align: center;
   margin-top: 30vh;
 }
+.productincart {
+  height: 336px;
+  width: 1240px;
+  text-align: start;
+  &__info {
+    text-align: start;
+
+    width: calc(100% - 200px);
+  }
+}

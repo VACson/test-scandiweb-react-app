@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectCategory } from '../../redux/slices/selectCategorySlice';
 import { selectCurrency } from '../../redux/slices/selectCurrencySlice';
+import { selectProduct } from '../../redux/slices/selectProductSlice';
+
 import cartCircle from '../../assets/img/Common.svg';
 
 class Product extends PureComponent {
@@ -14,45 +16,27 @@ class Product extends PureComponent {
     const chooseCurrency = ['$', '£', 'A$', '¥', '₽'];
     const onHover = () => {
       this.setState((prevState) => ({ isHover: true }));
-      console.log(this.state);
+      console.log();
     };
     const stopHover = () => {
       this.setState((prevState) => ({ isHover: false }));
     };
+    const currentID = this.props.product.id;
     return (
-      // <div className="product-list">
-      //   {this.props.product.map((item) => (
-      //     <div className="product-list--item" key={item.id}>
-      //       <img
-      //         className="product-block product-block--img"
-      //         src={item.gallery[0]}
-      //         alt={item.name}
-      //       />
-      //       <div>
-      //         <div className="product-block product-block--text">{item.name}</div>
-
-      //         <span className="product-block product-block--text">
-      //           {this.props.selectCurrencySlice}
-      //         </span>
-      //         <span className="product-block product-block--text">{item.prices[0].amount}</span>
-      //       </div>
-      //     </div>
-      //   ))}
-      // </div>
-      // <div className="">hello</div>
       <div
         className="product-list--item"
-        key={this.props.product.name}
+        key={`product/${currentID}`}
         onMouseOver={onHover}
         onMouseLeave={stopHover}>
-        <Link to={this.props.product.id}>
-          <img
-            className="product-block product-block--img"
-            src={this.props.product.gallery[0]}
-            alt={`product__${this.props.product.id}`}></img>
-        </Link>
+        <img
+          className="product-block product-block--img"
+          src={this.props.product.gallery[0]}
+          alt={`product__${this.props.product.id}`}
+          onClick={() => this.props.selectProduct(this.props.product.id)}></img>
         {this.state.isHover ? (
-          <img className="product__cartbutton" src={cartCircle} alt="" width={52} />
+          <Link to={`/product/${this.props.product.id}`}>
+            <img className="product__cartbutton" src={cartCircle} alt="" width={52} />{' '}
+          </Link>
         ) : (
           ''
         )}
@@ -71,7 +55,8 @@ class Product extends PureComponent {
 const mapStateToProps = (state) => ({
   selectCategorySlice: state.selectCategorySlice,
   selectCurrencySlice: state.selectCurrencySlice,
+  selectProductSlice: state.selectProductSlice,
 });
-const mapDispatchToProps = () => ({ selectCategory, selectCurrency });
+const mapDispatchToProps = () => ({ selectCategory, selectCurrency, selectProduct });
 
 export default connect(mapStateToProps, mapDispatchToProps())(Product);

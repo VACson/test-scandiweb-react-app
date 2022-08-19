@@ -1,16 +1,25 @@
 .flex {
   display: flex;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
-  text-align: center;
+  // text-align: center;
   height: 100%;
+  &--full {
+    width: 100%;
+  }
   &-row {
     flex-direction: row;
+  }
+  &-column {
+    flex-direction: column;
   }
   &--nwrap {
     flex-wrap: nowrap;
   }
   &--wrap {
     flex-wrap: wrap;
+  }
+  &--jcbetween {
+    justify-content: space-between;
   }
 }
