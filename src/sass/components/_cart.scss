@@ -3,12 +3,50 @@
   margin-top: 30vh;
 }
 .productincart {
-  height: 336px;
-  width: 1240px;
+  height: fit-content;
+  width: 100%;
   text-align: start;
   &__info {
     text-align: start;
-
     width: calc(100% - 200px);
+    &--mini {
+      width: 100%;
+      padding: 32px 16px;
+      display: flex;
+      align-items: start;
+    }
+    &__buttons {
+      height: 336px;
+      &--mini {
+        height: 190px;
+        padding: 0;
+      }
+    }
+  }
+  &__gallery {
+    position: relative;
+    z-index: -1;
+  }
+  &--mini {
+    background-color: #fff;
+    position: relative;
+
+    z-index: 2;
+  }
+}
+.cart__order {
+  width: 279px;
+  height: 159px;
+  &__item {
+    height: 28px;
+  }
+}
+.cartpopup {
+  z-index: 3;
+  &__total {
+    padding: 0 16px;
+  }
+  &__buttons {
+    padding: 32px 16px;
   }
 }

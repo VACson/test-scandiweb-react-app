@@ -16,9 +16,18 @@
   width: 100%;
   &--img {
     object-fit: cover;
-    width: 354px;
     margin: 0 auto;
-    height: 330px;
+    height: 288px;
+    margin: 24px;
+    &__incart {
+      width: 200px;
+      object-fit: cover;
+      &--mini {
+        width: 120px;
+        height: 190px;
+        margin: 0 16px 0 0;
+      }
+    }
   }
   &--text {
     margin-top: auto;
@@ -66,6 +75,13 @@
   box-sizing: border-box;
   margin-right: 8px;
   border: 2px solid #fff;
+  &--mini {
+    width: 20px;
+    height: 20px;
+    &--active {
+      outline: 1px solid #5ece7b;
+    }
+  }
   &--active {
     outline: 1px solid #5ece7b;
   }
@@ -78,6 +94,14 @@
   text-align: center;
   margin-right: 12px;
   padding: 13px 0;
+  &--mini {
+    height: 24px;
+    width: 24px;
+    &--active {
+      background-color: #1d1f22;
+      color: #fff;
+    }
+  }
   &--active {
     background-color: #1d1f22;
     color: #fff;

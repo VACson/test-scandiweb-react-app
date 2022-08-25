@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {};
+const initialState = { length: 0, totalPrice: {}, items: {} };
 
 export const cartSlice = createSlice({
   name: 'CART',
@@ -8,48 +8,43 @@ export const cartSlice = createSlice({
   reducers: {
     incrementCart: (state, action) => {
       const objKey = Object.keys(action.payload)[0];
-      state[objKey].count = state[objKey].count + 1;
+      state.items[objKey].count = state.items[objKey].count + 1;
+      state.length++;
     },
     decrementCart: (state, action) => {
       const objKey = Object.keys(action.payload)[0];
-      state[objKey].count = state[objKey].count - 1;
-      if (state[objKey].count < 1) {
-        delete state[objKey];
-        console.log('delete');
+      state.items[objKey].count = state.items[objKey].count - 1;
+      state.length--;
+      if (state.items[objKey].count < 1) {
+        delete state.items[objKey];
+        delete state.totalPrice[objKey];
+        // console.log('delete');
       }
     },
 
     updateCartItem: (state, action) => {
       const obj = action.payload;
       const objKey = Object.keys(obj)[0];
-      console.log(obj[objKey].id in state);
-      // const itemInCart = state.includes(objId);
-      // const itemIndex = action.id;
-      console.log('start');
-      if (objKey in state) {
-        console.log('find');
-        state[objKey] = action.payload[objKey];
-        if (state[objKey].count < 1) {
-          delete state[objKey];
-          console.log('delete');
+      // console.log('start');
+      if (objKey in state.items) {
+        // console.log('find');
+        state.items[objKey] = action.payload[objKey];
+        if (state.items[objKey].count < 1) {
+          delete state.items[objKey];
+          delete state.totalPrice[objKey];
+          state.length--;
+          // console.log('delete');
         }
       } else {
-        console.log('not find');
-        state[objKey] = action.payload[objKey];
-        state[objKey].count = 1;
+        // console.log('not find');
+        state.items[objKey] = action.payload[objKey];
+        state.items[objKey].count = 1;
+        state.length++;
       }
-
-      // else {
-      //  else {
-      //   state[objKey] = { ...state[objKey], attributes: {} };
-      //   console.log('count + 1');
-      // }
-      // }
     },
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { updateCartItem, incrementCart, decrementCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

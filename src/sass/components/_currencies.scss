@@ -10,11 +10,12 @@
     position: absolute;
     box-shadow: 0px 0px 20px #ccc;
     background-color: #fff;
-    // padding: 20px;
+    z-index: 6;
     top: 10%;
     &__item {
       box-sizing: border-box;
       padding: 20px;
+      cursor: pointer;
       &:hover {
         background-color: #eee;
       }

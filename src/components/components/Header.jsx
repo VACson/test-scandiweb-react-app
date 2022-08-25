@@ -9,26 +9,24 @@ import { selectCategory } from '../../redux/slices/selectCategorySlice';
 import { selectCurrency } from '../../redux/slices/selectCurrencySlice';
 
 import { PureComponent } from 'react';
+import CartPopUp from './CartPopUp';
 
 class Header extends PureComponent {
   state = {
     isOpen: false,
+    cartOpen: false,
   };
   popupClick = () => {
-    this.setState((prevState) => ({ isOpen: !prevState.isOpen }));
+    this.setState((prevState) => ({ isOpen: !prevState.isOpen, cartOpen: false }));
   };
+  cartPopupClick = () => {
+    this.setState((prevState) => ({ cartOpen: !prevState.cartOpen, isOpen: false }));
+  };
+
   render() {
     const categoryNames = ['ALL', 'CLOTHES', 'TECH'];
     const chooseCurrency = ['$', '£', 'A$', '¥', '₽'];
     const selectedCategory = this.props.selectCategorySlice.value;
-    // console.log(this.props);
-
-    // const incrementCartItem = (item) => {
-    //   this.props.selectCategory({
-    //     ...item,
-    //     count: item.count + 1
-    //   })
-    // }
 
     return (
       <div>
@@ -56,9 +54,11 @@ class Header extends PureComponent {
             <div className="currencies__popup" onClick={this.popupClick}>
               {this.state.isOpen ? <Currencies /> : []}
             </div>
-            <Link to="/cart">
-              <img height={16} src={cart} alt="cart-menu" />
-            </Link>
+            <div className="cart__popup">{this.state.cartOpen ? <CartPopUp /> : []}</div>
+            {/* <Link to="/cart"> */}
+            <img height={16} src={cart} alt="cart-menu" onClick={this.cartPopupClick} />
+            {this.props.cartSlice.length > 0 ? this.props.cartSlice.length : ''}
+            {/* </Link> */}
           </div>
         </header>
       </div>

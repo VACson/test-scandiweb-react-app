@@ -40,7 +40,6 @@ class ProductListClothes extends PureComponent {
   }
   displayProducts() {
     var data = this.props.data;
-    console.log(this.props.data);
     if (data.loading) {
       return <div>Loading products...</div>;
     } else {

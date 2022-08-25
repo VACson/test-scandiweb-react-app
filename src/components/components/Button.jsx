@@ -9,16 +9,16 @@ class Button extends Component {
     this.props.updateCartItem({
       [id]: {
         id: id,
+        price: this.props.price,
         count: 1,
         attributes: currentAttributes,
       },
     });
   };
   render() {
-    console.log(this.props.count);
     return (
       <button className="button button__addToCart fs-16 fw-600" onClick={this.onClick}>
-        ADD TO CART
+        {this.props.children}
       </button>
     );
   }

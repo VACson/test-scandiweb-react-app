@@ -12,4 +12,55 @@
     margin-top: 20px;
     margin-bottom: 40px;
   }
+  &__count {
+    height: 45px;
+    width: 45px;
+    font-size: 30px;
+    color: #1d1f22;
+    background-color: #fff;
+    border: 1px solid #1d1f22;
+    margin: 24px 0;
+    &--mini {
+      height: 24px;
+      width: 24px;
+      font-size: 12px;
+      margin: 0;
+    }
+  }
+}
+.button__imageCount {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  color: #fff;
+  background-color: #000;
+  opacity: 73%;
+  bottom: 40px;
+  padding-bottom: 6px;
+  cursor: pointer;
+  &--increment {
+    right: 16px;
+  }
+  &--decrement {
+    right: 48px;
+  }
+}
+.button {
+  &__popup {
+    width: 140px;
+    height: 43px;
+    background-color: #fff;
+    color: #1d1f22;
+    // margin-top: 20px;
+    // margin-bottom: 40px;
+
+    border: 1px solid #1d1f22;
+    &--green {
+      background-color: #5ece7b;
+      color: #fff;
+      border: none;
+      outline: none;
+    }
+  }
 }

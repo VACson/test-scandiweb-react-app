@@ -102,14 +102,16 @@ class ProductInCart extends Component {
     console.log(this.props);
     if (this.props.data.product) {
       return (
-        <div className="productincart flex flex-row">
-          <div className="productincart__info flex flex-row flex--nwrap flex--jcbetween">
+        <div className="productincart productincart--mini flex flex-row">
+          <div className="productincart__info productincart__info--mini flex flex-row flex--nwrap flex--jcbetween">
             <div className="productincart__info__attributes flex flex-column">
               <div className="flex--full">
-                <div className="fs-30 fw-600 mb-16">{this.props.data.product.name}</div>
-                <div className="fs-24 fw-400 mb-20">{this.props.data.product.brand}</div>
+                <span className="fs-16 fw-300 mb-16 flex--wrap">
+                  {this.props.data.product.name}
+                </span>
+                <div className="fs-16 fw-300 mb-20 flex--wrap">{this.props.data.product.brand}</div>
 
-                <div className="product__description__price flex--full fs-24 fw-700">
+                <div className="product__description__price flex--full fs-16 fw-500">
                   {this.props.data.product.prices[this.props.currency].currency.symbol}
                   {price}
                 </div>
@@ -118,15 +120,15 @@ class ProductInCart extends Component {
                   if (allAttributes[attributeIndex].type === 'swatch') {
                     return (
                       <div className="flex--full" key={this.props.id}>
-                        <div className="fs-18 fw-700 roboto mb-8">
+                        <div className="fs-14 fw-400 mb-8">
                           {allAttributes[attributeIndex].name}:
                         </div>
                         <div className="flex">
                           {allAttributes[attributeIndex].items.map((items, index) => {
                             return (
                               <label
-                                className={classNames('colorpick  fs-16 fw-400', {
-                                  'colorpick--active':
+                                className={classNames('colorpick--mini  fs-16 fw-400', {
+                                  'colorpick--mini--active':
                                     this.props.cartSlice.items[this.props.id].attributes[
                                       allAttributes[attributeIndex].name
                                     ] === items.value,
@@ -170,8 +172,8 @@ class ProductInCart extends Component {
                                     allAttributes[attributeIndex].items[index].value,
                                   ),
                                 )}
-                                className={classNames('sizepick fs-16 fw-400', {
-                                  'sizepick--active':
+                                className={classNames('sizepick--mini fs-14 fw-400', {
+                                  'sizepick--mini--active':
                                     this.props.cartSlice.items[this.props.id].attributes[
                                       allAttributes[attributeIndex].name
                                     ] === items.value,
@@ -202,20 +204,24 @@ class ProductInCart extends Component {
               </div>
             </div>
 
-            <div className="productincart__info__buttons flex flex-column flex--jcbetween">
-              <button className="button__count" onClick={() => this.increment()}>
+            <div className="productincart__info__buttons--mini flex flex-column flex--jcbetween">
+              <button
+                className="button__count button__count--mini"
+                onClick={() => this.increment()}>
                 +
               </button>
               {this.props.cartSlice.items[this.props.id].count}
-              <button className="button__count" onClick={() => this.decrement()}>
+              <button
+                className="button__count button__count--mini"
+                onClick={() => this.decrement()}>
                 -
               </button>
             </div>
           </div>
-          <div className="productincart__gallery">
+          <div className="productincart__gallery productincart__gallery--mini">
             <img
               src={this.props.data.product.gallery[this.state.currentImage]}
-              className="product-block product-block--img product-block--img__incart"
+              className="product-block product-block--img product-block--img__incart--mini"
               alt={`product__${this.props.data.product.id}`}></img>
             {this.state.currentImage > 0 ? (
               <button
