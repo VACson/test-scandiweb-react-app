@@ -162,7 +162,6 @@ class ProductInCart extends Component {
                         </div>
                         <div className="flex">
                           {allAttributes[attributeIndex].items.map((items, index) => {
-                            var name = `${allAttributes[attributeIndex].name}`;
                             return (
                               <label
                                 key={this.props.id.concat(
@@ -198,6 +197,7 @@ class ProductInCart extends Component {
                       </div>
                     );
                   }
+                  return null;
                 })}
               </div>
             </div>

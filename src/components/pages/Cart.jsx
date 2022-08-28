@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import ProductInCart from '../components/ProductInCart';
 import { connect } from 'react-redux';
 import { selectCurrency } from '../../redux/slices/selectCurrencySlice';
-import cartSlice from '../../redux/slices/cartSlice';
 
 class Cart extends PureComponent {
   render() {

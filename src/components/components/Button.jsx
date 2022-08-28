@@ -3,6 +3,10 @@ import { connect } from 'react-redux';
 import { updateCartItem } from '../../redux/slices/cartSlice';
 
 class Button extends Component {
+  constructor(props) {
+    super(props);
+    this.onClick = this.onClick.bind(this);
+  }
   onClick = () => {
     const currentAttributes = this.props.attributes;
     const id = this.props.id;
@@ -12,6 +16,7 @@ class Button extends Component {
         price: this.props.price,
         count: 1,
         attributes: currentAttributes,
+        attr: this.props.attr,
       },
     });
   };

@@ -38,11 +38,10 @@ const getBooksQuery = gql`
 `;
 class ProductFullWithQuery extends PureComponent {
   render() {
-    console.log(this.props);
     return (
       <Query query={getBooksQuery} variables={{ id: this.props.ID }}>
         {({ loading, error, data }) => {
-          if (loading) return <p>{console.log('Loading')}</p>;
+          if (loading) return <p>Loading</p>;
           if (error) return <p>{console.log(error)}</p>;
           return <ProductFull data={this.props.data} currency={this.props.currency} />;
         }}
@@ -57,6 +56,8 @@ class ProductFull extends PureComponent {
       currentImage: 0,
       currentRadio: {},
     };
+    this.createMarkup.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   createMarkup() {
     return { __html: this.props.data.product.description };
@@ -71,38 +72,29 @@ class ProductFull extends PureComponent {
     }));
   };
   componentDidMount() {
-    console.log('mount');
     if (this.props.data.product) {
       this.props.data.product.attributes.map((attribute) => {
-        this.setState((prevState) => ({
+        return this.setState((prevState) => ({
           currentRadio: {
             ...prevState.currentRadio,
             [attribute.id]: attribute.items[0].value,
           },
         }));
-        console.log('did');
       });
     }
   }
   render() {
-    console.log(this.props.data);
-    console.log(this.state);
     const chooseCurrency = ['$', '£', 'A$', '¥', '₽'];
     return (
-      // <Query query={getBooksQuery}>
-      //   {({ loading, error, data }) => {
-      //     if (loading) return <p>{console.log('Loading')}</p>;
-      //     if (error) return <p>{console.log(error)}</p>;
-
-      //     return (
       <div className="productpage__container">
-        <div className="flex flex-column">
+        <div className="flex flex-column sidegallery">
           {this.props.data.product.gallery.map((gallery, index) => {
             return (
               <img
                 src={gallery}
                 width={80}
                 key={index}
+                className="sidegallery__image"
                 onClick={() => this.setState(() => ({ currentImage: index }))}
                 alt={gallery}
                 style={{ objectFit: 'cover' }}
@@ -203,6 +195,7 @@ class ProductFull extends PureComponent {
                 </div>
               );
             }
+            return null;
           })}{' '}
           <div className="flex--full roboto fs-18 fw-700 mt-36 mb-10">Price:</div>
           <div className="product__description__price flex--full fs-24 fw-700">
@@ -212,6 +205,7 @@ class ProductFull extends PureComponent {
           <Button
             attributes={this.state.currentRadio}
             id={this.props.data.product.id}
+            attr={this.props.data.product.attributes}
             price={this.props.data.product.prices}
             count={1}>
             ADD TO CART

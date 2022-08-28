@@ -3,6 +3,7 @@
   flex-flow: row wrap;
   justify-content: space-between;
   &--item {
+    position: relative;
     width: 33%;
     max-width: 386px;
     height: 444px;
@@ -10,15 +11,29 @@
     flex-flow: column nowrap;
     justify-content: space-between;
     padding: 16px;
+    &:hover {
+      box-shadow: 0px 4px 15px 0px #a8acb0;
+    }
   }
 }
 .product-block {
   width: 100%;
   &--img {
     object-fit: cover;
-    margin: 0 auto;
     height: 288px;
-    margin: 24px;
+    position: relative;
+    &--outofstock {
+      position: absolute;
+      display: flex;
+      font-size: 24px;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      opacity: 50%;
+      color: #8d8f9a;
+    }
     &__incart {
       width: 200px;
       object-fit: cover;
@@ -35,8 +50,9 @@
 }
 .product {
   &__cartbutton {
-    margin-left: 80%;
-    margin-top: -30px;
+    position: absolute;
+    top: 60%;
+    left: 80%;
   }
   &__description {
     font-size: 18px;
@@ -48,7 +64,6 @@
       width: 100%;
       display: flex;
       justify-content: flex-start;
-      line-height: 159.96%;
       color: #1d1f22;
     }
   }
@@ -75,9 +90,12 @@
   box-sizing: border-box;
   margin-right: 8px;
   border: 2px solid #fff;
+  cursor: pointer;
+
   &--mini {
     width: 20px;
     height: 20px;
+
     &--active {
       outline: 1px solid #5ece7b;
     }
@@ -94,9 +112,15 @@
   text-align: center;
   margin-right: 12px;
   padding: 13px 0;
+  cursor: pointer;
   &--mini {
+    line-height: 24px;
     height: 24px;
-    width: 24px;
+    min-width: fit-content;
+    width: 20%;
+    padding: 0 2px;
+    margin-right: 5%;
+    margin-bottom: 8px;
     &--active {
       background-color: #1d1f22;
       color: #fff;
@@ -109,4 +133,17 @@
 }
 .radio {
   appearance: none;
+  padding: 0;
+  margin: 0;
+}
+.sidegallery {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 511px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &__image {
+    margin-bottom: 40px;
+  }
 }

@@ -11,6 +11,7 @@ const getProductsQuery = gql`
       products {
         name
         id
+        inStock
         gallery
         prices {
           currency {
@@ -32,7 +33,7 @@ class ProductListTech extends PureComponent {
       return <div className="">loading</div>;
     } else {
       return (
-        <div className="fw-400 fs-42">
+        <div className="fw-400 fs-42 mt-80 mb-100">
           {data.category.name.charAt(0).toUpperCase() + data.category.name.slice(1)}
         </div>
       );

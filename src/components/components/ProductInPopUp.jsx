@@ -2,7 +2,7 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import { gql } from 'apollo-boost';
 import { Query } from 'react-apollo';
-import { Component } from 'react';
+import { PureComponent } from 'react';
 import classNames from 'classnames';
 
 import { connect } from 'react-redux';
@@ -34,28 +34,29 @@ const getProductsQuery = gql`
     }
   }
 `;
-class ProductInCartWithQuery extends Component {
+class ProductInCartWithQuery extends PureComponent {
   render() {
-    console.log(this.props);
     return (
-      <Query query={getProductsQuery} variables={{ id: this.props.ID }}>
+      <Query query={getProductsQuery} variables={{ id: this.props.id }}>
         {({ loading, error, data }) => {
           if (loading) return <p>{console.log('Loading')}</p>;
-          if (error) return <p>{console.log(error)}</p>;
-          return (
-            <ProductInCart
-              data={this.props.data}
-              currency={this.props.currency}
-              id={this.props.id}
-              cartSlice={this.props.cartSlice}
-            />
-          );
+          else if (error) return <p>{console.log(error)}</p>;
+          else
+            return (
+              <ProductInPopUp
+                data={data}
+                currency={this.props.currency}
+                id={this.props.id}
+                attributes={data.product.attributes}
+                cartSlice={this.props.cartSlice}
+              />
+            );
         }}
       </Query>
     );
   }
 }
-class ProductInCart extends Component {
+class ProductInPopUp extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -93,13 +94,12 @@ class ProductInCart extends Component {
   };
 
   render() {
+    console.log(this.props);
     let price = (
       this.props.data.product.prices[this.props.currency].amount *
       this.props.cartSlice.items[this.props.id].count
     ).toFixed(2);
-    const imageCount = this.props.data.product.gallery.length - 1;
     const allAttributes = this.props.data.product.attributes;
-    console.log(this.props);
     if (this.props.data.product) {
       return (
         <div className="productincart productincart--mini flex flex-row">
@@ -109,9 +109,9 @@ class ProductInCart extends Component {
                 <span className="fs-16 fw-300 mb-16 flex--wrap">
                   {this.props.data.product.name}
                 </span>
-                <div className="fs-16 fw-300 mb-20 flex--wrap">{this.props.data.product.brand}</div>
+                <div className="fs-16 fw-300 flex--wrap">{this.props.data.product.brand}</div>
 
-                <div className="product__description__price flex--full fs-16 fw-500">
+                <div className="product__description__price flex--full fs-16 fw-500 mb-8 mt-4">
                   {this.props.data.product.prices[this.props.currency].currency.symbol}
                   {price}
                 </div>
@@ -127,7 +127,7 @@ class ProductInCart extends Component {
                           {allAttributes[attributeIndex].items.map((items, index) => {
                             return (
                               <label
-                                className={classNames('colorpick--mini  fs-16 fw-400', {
+                                className={classNames('colorpick colorpick--mini  fs-16 fw-400', {
                                   'colorpick--mini--active':
                                     this.props.cartSlice.items[this.props.id].attributes[
                                       allAttributes[attributeIndex].name
@@ -143,7 +143,6 @@ class ProductInCart extends Component {
                                 <input
                                   type="radio"
                                   className="radio"
-                                  // onChange={this.handleChange}
                                   name={allAttributes[attributeIndex].name}
                                   value={items.value}
                                   defaultChecked={index === 0}></input>
@@ -159,12 +158,11 @@ class ProductInCart extends Component {
                       <div
                         className="flex--full"
                         key={allAttributes[attributeIndex].name.concat(this.props.data.product.id)}>
-                        <div className="fs-18 fw-700 roboto mb-8">
+                        <div className="fs-18 fw-400 roboto mb-8">
                           {allAttributes[attributeIndex].name}:
                         </div>
-                        <div className="flex">
+                        <div className="flex flex--wrap">
                           {allAttributes[attributeIndex].items.map((items, index) => {
-                            var name = `${allAttributes[attributeIndex].name}`;
                             return (
                               <label
                                 key={this.props.id.concat(
@@ -172,7 +170,7 @@ class ProductInCart extends Component {
                                     allAttributes[attributeIndex].items[index].value,
                                   ),
                                 )}
-                                className={classNames('sizepick--mini fs-14 fw-400', {
+                                className={classNames('sizepick sizepick--mini fs-14 fw-400', {
                                   'sizepick--mini--active':
                                     this.props.cartSlice.items[this.props.id].attributes[
                                       allAttributes[attributeIndex].name
@@ -180,11 +178,6 @@ class ProductInCart extends Component {
                                 })}
                                 onClick={this.handleChange}
                                 htmlFor={items.id__name}>
-                                {console.log(
-                                  this.props.id.concat(
-                                    allAttributes[attributeIndex].name.concat(items.value),
-                                  ),
-                                )}
                                 <input
                                   className="radio"
                                   type="radio"
@@ -200,6 +193,7 @@ class ProductInCart extends Component {
                       </div>
                     );
                   }
+                  return null;
                 })}
               </div>
             </div>
@@ -223,28 +217,6 @@ class ProductInCart extends Component {
               src={this.props.data.product.gallery[this.state.currentImage]}
               className="product-block product-block--img product-block--img__incart--mini"
               alt={`product__${this.props.data.product.id}`}></img>
-            {this.state.currentImage > 0 ? (
-              <button
-                className="button__imageCount button__imageCount--decrement"
-                onClick={() =>
-                  this.setState((prevState) => ({ currentImage: prevState.currentImage - 1 }))
-                }>
-                &#60;
-              </button>
-            ) : (
-              ''
-            )}
-            {this.state.currentImage < imageCount ? (
-              <button
-                className="button__imageCount button__imageCount--increment"
-                onClick={() =>
-                  this.setState((prevState) => ({ currentImage: prevState.currentImage + 1 }))
-                }>
-                &#62;
-              </button>
-            ) : (
-              ''
-            )}
           </div>
         </div>
       );
@@ -256,13 +228,7 @@ const mapStateToProps = (state) => ({
 });
 const mapDispatchToProps = () => ({ updateCartItem, incrementCart, decrementCart });
 
-connect(mapStateToProps, mapDispatchToProps())(ProductInCart, ProductInCartWithQuery);
-export default graphql(getProductsQuery, {
-  options: (props) => {
-    return {
-      variables: {
-        id: props.id,
-      },
-    };
-  },
-})(connect(mapStateToProps, mapDispatchToProps())(ProductInCart), ProductInCartWithQuery);
+export default graphql(getProductsQuery)(
+  connect(mapStateToProps, mapDispatchToProps())(ProductInPopUp),
+  ProductInCartWithQuery,
+);

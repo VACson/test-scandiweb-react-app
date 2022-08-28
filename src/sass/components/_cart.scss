@@ -11,21 +11,24 @@
     width: calc(100% - 200px);
     &--mini {
       width: 100%;
-      padding: 32px 16px;
+      margin: 32px 8px 32px 16px;
       display: flex;
-      align-items: start;
+      align-items: flex-start;
     }
     &__buttons {
       height: 336px;
       &--mini {
         height: 190px;
-        padding: 0;
+        margin: auto 0;
       }
+    }
+    &__attributes {
+      width: 85%;
     }
   }
   &__gallery {
     position: relative;
-    z-index: -1;
+    // z-index: -1;
   }
   &--mini {
     background-color: #fff;

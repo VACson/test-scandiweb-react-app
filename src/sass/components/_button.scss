@@ -3,6 +3,7 @@
   outline: none;
   border: none;
   background-color: #fff;
+  cursor: pointer;
   &__addToCart {
     width: 100%;
     background-color: #5ece7b;
@@ -13,17 +14,20 @@
     margin-bottom: 40px;
   }
   &__count {
+    cursor: pointer;
     height: 45px;
     width: 45px;
     font-size: 30px;
     color: #1d1f22;
     background-color: #fff;
     border: 1px solid #1d1f22;
-    margin: 24px 0;
+    margin: 24px;
     &--mini {
       height: 24px;
       width: 24px;
-      font-size: 12px;
+      font-size: 24px;
+      line-height: 1;
+      padding: 0;
       margin: 0;
     }
   }
