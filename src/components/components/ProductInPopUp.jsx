@@ -89,6 +89,7 @@ class ProductInPopUp extends PureComponent {
         count: this.props.cartSlice.items[this.props.id].count,
         price: this.props.cartSlice.items[this.props.id].price,
         attributes: { ...this.props.cartSlice.items[this.props.id].attributes, [name]: value },
+        attr: { ...this.props.cartSlice.items[this.props.id].attr },
       },
     });
   };
@@ -99,17 +100,17 @@ class ProductInPopUp extends PureComponent {
       this.props.data.product.prices[this.props.currency].amount *
       this.props.cartSlice.items[this.props.id].count
     ).toFixed(2);
-    const allAttributes = this.props.data.product.attributes;
+    const allAttributes = this.props.cartSlice.items[this.props.id].attr;
     if (this.props.data.product) {
       return (
         <div className="productincart productincart--mini flex flex-row">
           <div className="productincart__info productincart__info--mini flex flex-row flex--nwrap flex--jcbetween">
             <div className="productincart__info__attributes flex flex-column">
               <div className="flex--full">
+                <div className="fs-16 fw-300 flex--wrap">{this.props.data.product.brand}</div>
                 <span className="fs-16 fw-300 mb-16 flex--wrap">
                   {this.props.data.product.name}
                 </span>
-                <div className="fs-16 fw-300 flex--wrap">{this.props.data.product.brand}</div>
 
                 <div className="product__description__price flex--full fs-16 fw-500 mb-8 mt-4">
                   {this.props.data.product.prices[this.props.currency].currency.symbol}

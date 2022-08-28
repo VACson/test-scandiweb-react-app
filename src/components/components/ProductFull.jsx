@@ -123,7 +123,7 @@ class ProductFull extends PureComponent {
                 <div
                   className="flex--full"
                   key={this.props.data.product.attributes[attributeIndex].name}>
-                  <div className="fs-18 fw-700 roboto mb-8">
+                  <div className="fs-18 fw-700 roboto mb-8 ttu">
                     {this.props.data.product.attributes[attributeIndex].name}:
                   </div>
                   <div className="flex">
@@ -164,7 +164,7 @@ class ProductFull extends PureComponent {
                   key={this.props.data.product.attributes[attributeIndex].name.concat(
                     this.props.data.product.attributes[attributeIndex].name,
                   )}>
-                  <div className="fs-18 fw-700 roboto mb-8">
+                  <div className="fs-18 fw-700 roboto mb-8 ttu">
                     {this.props.data.product.attributes[attributeIndex].name}:
                   </div>
                   <div className="flex">
@@ -197,7 +197,7 @@ class ProductFull extends PureComponent {
             }
             return null;
           })}{' '}
-          <div className="flex--full roboto fs-18 fw-700 mt-36 mb-10">Price:</div>
+          <div className="flex--full roboto fs-18 fw-700 mt-36 mb-10">PRICE:</div>
           <div className="product__description__price flex--full fs-24 fw-700">
             {chooseCurrency[this.props.currency]}
             {this.props.data.product.prices[this.props.currency].amount}

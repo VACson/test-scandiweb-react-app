@@ -12,9 +12,11 @@
     background-color: #fff;
     z-index: 6;
     top: 10%;
+    right: 5%;
     &__item {
       box-sizing: border-box;
       padding: 20px;
+      width: 114px;
       cursor: pointer;
       &:hover {
         background-color: #eee;

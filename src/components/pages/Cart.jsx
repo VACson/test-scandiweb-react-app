@@ -20,12 +20,12 @@ class Cart extends PureComponent {
     }
     return (
       <>
-        <div className="fw-700 fs-42">Cart</div>;
+        <div className="fw-700 fs-42 mt-80 mb-55">CART</div>;
         {cartList.length === 0 ? (
           <div className="emptyCart fw-400 fs-24">
             Nothing here for now...
             <Link to="/">
-              <div className="fs-36">Return to shop</div>
+              <button className="button fs-24">Click to return to shop</button>
             </Link>
           </div>
         ) : (

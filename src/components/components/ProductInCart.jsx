@@ -88,6 +88,7 @@ class ProductInCart extends Component {
         count: this.props.cartSlice.items[this.props.id].count,
         price: this.props.cartSlice.items[this.props.id].price,
         attributes: { ...this.props.cartSlice.items[this.props.id].attributes, [name]: value },
+        attr: { ...this.props.cartSlice.items[this.props.id].attr },
       },
     });
   };
@@ -98,7 +99,7 @@ class ProductInCart extends Component {
       this.props.cartSlice.items[this.props.id].count
     ).toFixed(2);
     const imageCount = this.props.data.product.gallery.length - 1;
-    const allAttributes = this.props.data.product.attributes;
+    const allAttributes = this.props.cartSlice.items[this.props.id].attr;
     console.log(this.props);
     if (this.props.data.product) {
       return (
@@ -118,7 +119,7 @@ class ProductInCart extends Component {
                   if (allAttributes[attributeIndex].type === 'swatch') {
                     return (
                       <div className="flex--full" key={this.props.id}>
-                        <div className="fs-18 fw-700 roboto mb-8">
+                        <div className="fs-18 fw-700 roboto mb-8 ttu">
                           {allAttributes[attributeIndex].name}:
                         </div>
                         <div className="flex">
@@ -157,7 +158,7 @@ class ProductInCart extends Component {
                       <div
                         className="flex--full"
                         key={allAttributes[attributeIndex].name.concat(this.props.data.product.id)}>
-                        <div className="fs-18 fw-700 roboto mb-8">
+                        <div className="fs-18 fw-700 roboto mb-8 ttu">
                           {allAttributes[attributeIndex].name}:
                         </div>
                         <div className="flex">
@@ -202,7 +203,7 @@ class ProductInCart extends Component {
               </div>
             </div>
 
-            <div className="productincart__info__buttons flex flex-column flex--jcbetween">
+            <div className="productincart__info__buttons flex flex-column flex--jcbetween fs-24 fw-500">
               <button className="button__count" onClick={() => this.increment()}>
                 +
               </button>

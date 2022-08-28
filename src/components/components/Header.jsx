@@ -29,6 +29,13 @@ class Header extends PureComponent {
   cartPopupClick = () => {
     this.setState((prevState) => ({ cartOpen: !prevState.cartOpen, isOpen: false }));
   };
+  logoClick = () => {
+    this.setState(() => ({
+      cartOpen: false,
+      isOpen: false,
+    }));
+    this.props.selectCategory(0);
+  };
   closePopup = () => {
     this.setState(() => ({
       cartOpen: false,
@@ -41,9 +48,9 @@ class Header extends PureComponent {
     const chooseCurrency = ['$', '£', 'A$', '¥', '₽'];
     const selectedCategory = this.props.selectCategorySlice.value;
     if (this.state.cartOpen === true) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflowY = 'hidden';
     } else {
-      document.body.style.overflow = 'visible';
+      document.body.style.overflowY = 'visible';
     }
     return (
       <div>
@@ -62,7 +69,7 @@ class Header extends PureComponent {
                 </Link>
               ))}
           </ul>
-          <Link to="/" className="header--item header--item--logo" onClick={this.closePopup}>
+          <Link to="/" className="header--item header--item--logo" onClick={this.logoClick}>
             <img src={logo} width="32" alt="mainlogo" />
           </Link>
           <div className="flex flex-row">
