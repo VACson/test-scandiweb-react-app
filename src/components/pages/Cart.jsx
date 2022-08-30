@@ -31,10 +31,8 @@ class Cart extends PureComponent {
         ) : (
           <div>
             {cartList.map((obj) => {
-              console.log(obj.price);
               const key = Object.keys(obj)[0];
               price = obj.price * obj.count;
-              // symbol = obj.
               return (
                 <ProductInCart
                   id={obj[key]}

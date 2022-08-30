@@ -39,7 +39,7 @@ class ProductInCartWithQuery extends PureComponent {
     return (
       <Query query={getProductsQuery} variables={{ id: this.props.id }}>
         {({ loading, error, data }) => {
-          if (loading) return <p>{console.log('Loading')}</p>;
+          if (loading) return <p>Loading</p>;
           else if (error) return <p>{console.log(error)}</p>;
           else
             return (
@@ -65,6 +65,9 @@ class ProductInPopUp extends PureComponent {
       currentRadio: this.props.cartSlice.items[this.props.id].attributes,
       count: this.props.count,
     };
+    this.increment = this.increment.bind(this);
+    this.decrement = this.decrement.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   increment = () => {
@@ -95,7 +98,6 @@ class ProductInPopUp extends PureComponent {
   };
 
   render() {
-    console.log(this.props);
     let price = (
       this.props.data.product.prices[this.props.currency].amount *
       this.props.cartSlice.items[this.props.id].count
@@ -159,7 +161,7 @@ class ProductInPopUp extends PureComponent {
                       <div
                         className="flex--full"
                         key={allAttributes[attributeIndex].name.concat(this.props.data.product.id)}>
-                        <div className="fs-18 fw-400 roboto mb-8">
+                        <div className="fs-18 fw-400 mb-8">
                           {allAttributes[attributeIndex].name}:
                         </div>
                         <div className="flex flex--wrap">
@@ -171,12 +173,15 @@ class ProductInPopUp extends PureComponent {
                                     allAttributes[attributeIndex].items[index].value,
                                   ),
                                 )}
-                                className={classNames('sizepick sizepick--mini fs-14 fw-400', {
-                                  'sizepick--mini--active':
-                                    this.props.cartSlice.items[this.props.id].attributes[
-                                      allAttributes[attributeIndex].name
-                                    ] === items.value,
-                                })}
+                                className={classNames(
+                                  'sizepick sourcesans sizepick--mini fs-14 fw-400',
+                                  {
+                                    'sizepick--mini--active':
+                                      this.props.cartSlice.items[this.props.id].attributes[
+                                        allAttributes[attributeIndex].name
+                                      ] === items.value,
+                                  },
+                                )}
                                 onClick={this.handleChange}
                                 htmlFor={items.id__name}>
                                 <input

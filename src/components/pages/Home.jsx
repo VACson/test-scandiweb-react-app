@@ -3,7 +3,6 @@ import ProductListClothes from '../components/ProductListClothes';
 import ProductListTech from '../components/ProductListTech';
 import { connect } from 'react-redux';
 import { selectCategory } from '../../redux/slices/selectCategorySlice';
-import { selectCurrency } from '../../redux/slices/selectCurrencySlice';
 
 class Home extends PureComponent {
   render() {
@@ -18,8 +17,7 @@ class Home extends PureComponent {
 }
 const mapStateToProps = (state) => ({
   selectCategorySlice: state.selectCategorySlice,
-  selectCurrencySlice: state.selectCurrencySlice,
 });
-const mapDispatchToProps = () => ({ selectCategory, selectCurrency });
+const mapDispatchToProps = () => ({ selectCategory });
 
 export default connect(mapStateToProps, mapDispatchToProps())(Home);

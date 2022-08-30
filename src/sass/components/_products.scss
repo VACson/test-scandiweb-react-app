@@ -56,9 +56,11 @@
   }
   &__description {
     font-size: 18px;
+    font-weight: 300;
     line-height: 160%;
     &__price {
       font-weight: 500;
+      font-size: 18px;
     }
     &__text {
       width: 100%;
@@ -70,9 +72,10 @@
 }
 .productpage__container {
   margin-top: 82px;
-  width: 1000px;
+  // width: 1000px;
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
   &__img {
     width: 610px;
     height: 511px;

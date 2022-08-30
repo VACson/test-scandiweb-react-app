@@ -173,7 +173,7 @@ class ProductFull extends PureComponent {
                         var name = `${this.props.data.product.attributes[attributeIndex].name}`;
                         return (
                           <label
-                            className={classNames('sizepick fs-16 fw-400', {
+                            className={classNames('sizepick sourcesans fs-16 fw-400', {
                               'sizepick--active': this.state.currentRadio[name] === items.value,
                             })}
                             key={items.id.concat(name.concat(items.value))}

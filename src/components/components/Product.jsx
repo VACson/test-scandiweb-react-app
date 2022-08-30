@@ -13,23 +13,25 @@ class Product extends PureComponent {
     this.state = {
       isHover: false,
     };
+    this.onHover = this.onHover.bind(this);
+    this.stopHover = this.stopHover.bind(this);
   }
+  onHover = () => {
+    this.setState(() => ({ isHover: true }));
+  };
+  stopHover = () => {
+    this.setState(() => ({ isHover: false }));
+  };
   render() {
     const chooseCurrency = ['$', '£', 'A$', '¥', '₽'];
-    const onHover = () => {
-      this.setState((prevState) => ({ isHover: true }));
-      console.log();
-    };
-    const stopHover = () => {
-      this.setState((prevState) => ({ isHover: false }));
-    };
+
     const currentID = this.props.product.id;
     return (
       <div
         className="product-list--item"
         key={`product/${currentID}`}
-        onMouseOver={onHover}
-        onMouseLeave={stopHover}>
+        onMouseOver={this.onHover}
+        onMouseLeave={this.stopHover}>
         <img
           className="product-block product-block--img"
           src={this.props.product.gallery[0]}
@@ -49,7 +51,7 @@ class Product extends PureComponent {
 
         <div className="product__description">
           {this.props.product.name}
-          <div className="product__description__price fw-500">
+          <div className="product__description__price">
             {chooseCurrency[this.props.selectCurrencySlice.symbol]}
             {this.props.product.prices[this.props.selectCurrencySlice.symbol].amount}
           </div>
