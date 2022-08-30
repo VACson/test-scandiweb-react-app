@@ -43,23 +43,21 @@ class CartPopUp extends PureComponent {
                 <ProductInPopUp
                   id={obj[key]}
                   key={obj[key]}
-                  currency={this.props.selectCurrencySlice.symbol}>
-                  {console.log(obj[key])}
-                </ProductInPopUp>
+                  currency={this.props.selectCurrencySlice.symbol}></ProductInPopUp>
               );
             })}
-            <div className="flex flex--jcbetween cartpopup__total fw-700 fs-16">
+            <div className="flex flex--jcbetween cartpopup__total fw-500 fs-16">
               Total
-              <span>
+              <span className="fw-700">
                 {currency[this.props.selectCurrencySlice.symbol]}
                 {finalPrice}
               </span>
             </div>
             <div className="flex flex--jcbetween cartpopup__buttons">
               <Link to="/cart" onClick={this.props.onClick}>
-                <button className="button button__popup fs-16 fw-600">VIEW BAG</button>
+                <button className="button button__popup fs-14 fw-600">VIEW BAG</button>
               </Link>
-              <button className="button button__popup button__popup--green fs-16 fw-600">
+              <button className="button button__popup button__popup--green fs-14 fw-600">
                 CHECK OUT
               </button>
             </div>

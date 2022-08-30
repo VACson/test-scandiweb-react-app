@@ -17,6 +17,7 @@ class Header extends PureComponent {
     this.popupClick = this.popupClick.bind(this);
     this.cartPopupClick = this.cartPopupClick.bind(this);
     this.closePopup = this.closePopup.bind(this);
+    this.logoClick = this.logoClick.bind(this);
     this.state = {
       isOpen: false,
       cartOpen: false,
@@ -81,7 +82,7 @@ class Header extends PureComponent {
               {this.state.isOpen ? <Currencies /> : []}
             </div>
 
-            <div className="cart__popup">
+            <div className="cart__popup fs-18 fw-500">
               {this.state.cartOpen ? <CartPopUp onClick={this.cartPopupClick} /> : []}
             </div>
             <div
@@ -89,7 +90,9 @@ class Header extends PureComponent {
               onClick={this.props.cartSlice.length > 0 ? this.cartPopupClick : null}>
               <img height={16} src={cart} alt="cart-menu" />
               {this.props.cartSlice.length > 0 ? (
-                <div className="cart__icon__count">{this.props.cartSlice.length}</div>
+                <div className="cart__icon__count fs-14 fw-700 roboto">
+                  {this.props.cartSlice.length}
+                </div>
               ) : null}
             </div>
             {this.state.cartOpen ? <div className="modal" onClick={this.cartPopupClick}></div> : []}

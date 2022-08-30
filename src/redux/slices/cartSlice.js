@@ -18,25 +18,20 @@ export const cartSlice = createSlice({
       if (state.items[objKey].count < 1) {
         delete state.items[objKey];
         delete state.totalPrice[objKey];
-        // console.log('delete');
       }
     },
 
     updateCartItem: (state, action) => {
       const obj = action.payload;
       const objKey = Object.keys(obj)[0];
-      // console.log('start');
       if (objKey in state.items) {
-        // console.log('find');
         state.items[objKey] = action.payload[objKey];
         if (state.items[objKey].count < 1) {
           delete state.items[objKey];
           delete state.totalPrice[objKey];
           state.length--;
-          // console.log('delete');
         }
       } else {
-        // console.log('not find');
         state.items[objKey] = action.payload[objKey];
         state.items[objKey].count = 1;
         state.length++;
