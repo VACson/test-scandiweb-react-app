@@ -1,0 +1,152 @@
+.product-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  &--item {
+    position: relative;
+    width: 33%;
+    max-width: 386px;
+    height: 444px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    padding: 16px;
+    &:hover {
+      box-shadow: 0px 4px 15px 0px #a8acb0;
+    }
+  }
+}
+.product-block {
+  width: 100%;
+  &--img {
+    object-fit: cover;
+    height: 288px;
+    position: relative;
+    &--outofstock {
+      position: absolute;
+      display: flex;
+      font-size: 24px;
+      justify-content: center;
+      padding-top: 40%;
+      width: 100%;
+      height: 100%;
+      background-color: #fff;
+      opacity: 50%;
+      color: #8d8f9a;
+    }
+    &__incart {
+      width: 200px;
+      object-fit: cover;
+      &--mini {
+        width: 120px;
+        height: 190px;
+        margin: 0 16px 0 0;
+      }
+    }
+  }
+  &--text {
+    margin-top: auto;
+  }
+}
+.product {
+  &__cartbutton {
+    position: absolute;
+    top: 60%;
+    left: 75%;
+  }
+  &__description {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 160%;
+    &__price {
+      font-weight: 500;
+      font-size: 18px;
+    }
+    &__text {
+      width: 100%;
+      display: flex;
+      justify-content: flex-start;
+      color: #1d1f22;
+    }
+  }
+}
+.productpage__container {
+  margin-top: 82px;
+  // width: 1000px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  &__img {
+    width: 610px;
+    height: 511px;
+    object-fit: contain;
+  }
+  &__sidetext {
+    width: 292px;
+  }
+}
+.colorpick {
+  height: 34px;
+  width: 34px;
+  // border: 2px solid #000;
+  border-radius: 1px;
+  box-sizing: border-box;
+  margin-right: 8px;
+  border: 2px solid #fff;
+  cursor: pointer;
+
+  &--mini {
+    width: 20px;
+    height: 20px;
+
+    &--active {
+      outline: 1px solid #5ece7b;
+    }
+  }
+  &--active {
+    outline: 1px solid #5ece7b;
+  }
+}
+.sizepick {
+  width: 63px;
+  height: 45px;
+  border: 1px solid #1d1f22;
+  border-radius: 0;
+  text-align: center;
+  margin-right: 12px;
+  padding: 13px 0;
+  cursor: pointer;
+  &--mini {
+    line-height: 24px;
+    height: 24px;
+    min-width: fit-content;
+    width: 20%;
+    padding: 0 2px;
+    margin-right: 5%;
+    margin-bottom: 8px;
+    &--active {
+      background-color: #1d1f22;
+      color: #fff;
+    }
+  }
+  &--active {
+    background-color: #1d1f22;
+    color: #fff;
+  }
+}
+.radio {
+  appearance: none;
+  padding: 0;
+  margin: 0;
+}
+.sidegallery {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 511px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  &__image {
+    margin-bottom: 40px;
+  }
+}
