@@ -1,12 +1,13 @@
 import React from 'react';
-import logo from '../../assets/img/Group.svg';
-import cart from '../../assets/img/EmptyCart.svg';
-import Currencies from './Currencies';
+import Logo from './svg/Logo';
+import EmptyCart from './svg/EmptyCart';
+import CurrenciesWithData from './withData/CurrenciesWithData';
 
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectCategory } from '../../redux/slices/selectCategorySlice';
 import { selectCurrency } from '../../redux/slices/selectCurrencySlice';
+import { Names, currencySymbolsData, homeLink } from './constants';
 
 import { PureComponent } from 'react';
 import CartPopUp from './CartPopUp';
@@ -14,90 +15,84 @@ import CartPopUp from './CartPopUp';
 class Header extends PureComponent {
   constructor(props) {
     super(props);
-    this.popupClick = this.popupClick.bind(this);
-    this.cartPopupClick = this.cartPopupClick.bind(this);
-    this.closePopup = this.closePopup.bind(this);
     this.logoClick = this.logoClick.bind(this);
+    this.onCategoryClick = this.onCategoryClick.bind(this);
     this.state = {
-      isOpen: false,
+      currenciesOpen: false,
       cartOpen: false,
     };
   }
 
-  popupClick = () => {
-    this.setState((prevState) => ({ isOpen: !prevState.isOpen, cartOpen: false }));
+  currenciesClick = () => {
+    this.setState((prevState) => ({ currenciesOpen: !prevState.currenciesOpen, cartOpen: false }));
   };
   cartPopupClick = () => {
-    this.setState((prevState) => ({ cartOpen: !prevState.cartOpen, isOpen: false }));
+    this.setState((prevState) => ({ cartOpen: !prevState.cartOpen, currenciesOpen: false }));
   };
   logoClick = () => {
-    this.setState(() => ({
-      cartOpen: false,
-      isOpen: false,
-    }));
+    this.closePopup();
     this.props.selectCategory(0);
   };
   closePopup = () => {
     this.setState(() => ({
       cartOpen: false,
-      isOpen: false,
+      currenciesOpen: false,
     }));
+  };
+  onCategoryClick = (index) => {
+    this.props.selectCategory(index);
   };
 
   render() {
-    const categoryNames = ['ALL', 'CLOTHES', 'TECH'];
-    const chooseCurrency = ['$', '£', 'A$', '¥', '₽'];
-    const selectedCategory = this.props.selectCategorySlice.value;
-    if (this.state.cartOpen === true) {
-      document.body.style.overflowY = 'hidden';
-    } else {
-      document.body.style.overflowY = 'visible';
-    }
+    const categoryNames = Names;
+    const chosenCurrency = currencySymbolsData[this.props.selectCurrencySlice.symbol];
+    const cartCount = this.props.cartSlice.reduce((a, item) => {
+      return item.count + a;
+    }, 0);
     return (
       <div>
         <header className="header">
           <ul className="flex flex-row" onClick={this.closePopup}>
-            {categoryNames &&
-              categoryNames.map((name, index) => (
-                <Link
-                  to="/"
-                  className={
-                    selectedCategory === index ? 'header--item header--item-active' : 'header--item'
-                  }
-                  key={`${name}_${index}`}
-                  onClick={() => this.props.selectCategory(index)}>
-                  <li>{name}</li>
-                </Link>
-              ))}
+            {categoryNames?.map((name, index) => (
+              <Link
+                to={homeLink}
+                className={
+                  index === this.props.selectCategorySlice.value
+                    ? 'header--item header--item-active'
+                    : 'header--item'
+                }
+                key={`${name}_${index}`}
+                onClick={() => this.onCategoryClick(index)}>
+                <li>{name}</li>
+              </Link>
+            ))}
           </ul>
-          <Link to="/" className="header--item header--item--logo" onClick={this.logoClick}>
-            <img src={logo} width="32" alt="mainlogo" />
+          <Link to={homeLink} className="header--item header--item--logo" onClick={this.logoClick}>
+            <Logo />
           </Link>
-          <div className="flex flex-row">
-            <div className="currencies header--item fw-500" onClick={this.popupClick}>
-              {chooseCurrency[this.props.selectCurrencySlice.symbol]}&#160;
-              <div className="currencies__arrow">&#5167;</div>{' '}
+          <div className="flex flex-row header--item">
+            <div className="currencies header--item fw-500" onClick={this.currenciesClick}>
+              {chosenCurrency}&#160;
+              <div className="currencies__arrow">&#5167;</div>
             </div>
-            <div className="currencies__popup" onClick={this.popupClick}>
-              {this.state.isOpen ? <Currencies /> : []}
+            <div className="currencies__popup" onClick={this.currenciesClick}>
+              {this.state.currenciesOpen && <CurrenciesWithData />}
             </div>
-
-            <div className="cart__popup fs-18 fw-500">
-              {this.state.cartOpen ? <CartPopUp onClick={this.cartPopupClick} /> : []}
-            </div>
+            {this.state.cartOpen && <CartPopUp onClick={this.cartPopupClick} />}
             <div
               className="cart__icon"
               onClick={this.props.cartSlice.length > 0 ? this.cartPopupClick : null}>
-              <img height={16} src={cart} alt="cart-menu" />
-              {this.props.cartSlice.length > 0 ? (
-                <div className="cart__icon__count fs-14 fw-700 roboto">
-                  {this.props.cartSlice.length}
-                </div>
+              <EmptyCart />
+              {cartCount > 0 ? (
+                <div className="cart__icon__count fs-14 fw-700 roboto">{cartCount}</div>
               ) : null}
             </div>
-            {this.state.cartOpen ? <div className="modal" onClick={this.cartPopupClick}></div> : []}
           </div>
         </header>
+        {this.state.currenciesOpen && (
+          <div className="modal modal--transparent" onClick={this.closePopup}></div>
+        )}
+        {this.state.cartOpen && <div className="modal" onClick={this.closePopup}></div>}
       </div>
     );
   }

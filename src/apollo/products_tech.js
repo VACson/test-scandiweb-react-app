@@ -7,7 +7,10 @@ export const ALL_TECH = gql`
       products {
         name
         id
+        inStock
         gallery
+        category
+        brand
         prices {
           currency {
             label

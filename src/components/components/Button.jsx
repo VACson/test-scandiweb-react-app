@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { updateCartItem } from '../../redux/slices/cartSlice';
 
-class Button extends Component {
+class Button extends PureComponent {
   constructor(props) {
     super(props);
     this.onClick = this.onClick.bind(this);
   }
   onClick = () => {
-    const currentAttributes = this.props.attributes;
-    const id = this.props.id;
     this.props.updateCartItem({
-      [id]: {
-        id: id,
-        price: this.props.price,
-        count: 1,
-        attributes: currentAttributes,
-        attr: this.props.attr,
-      },
+      id: this.props.id,
+      price: this.props.price,
+      count: 1,
+      attributes: this.props.attributes,
+      attr: this.props.attr,
     });
   };
   render() {
+    const buttonInStock = this.props.inStock ? '' : 'button__addToCart--Disabled';
     return (
-      <button className="button button__addToCart fs-16 fw-600" onClick={this.onClick}>
-        {this.props.children}
+      <button
+        className={classNames(`button button__addToCart ${buttonInStock} fs-16 fw-600`)}
+        onClick={this.onClick}>
+        {this.props.inStock ? this.props.children : 'OUT OF STOCK'}
       </button>
     );
   }

@@ -1,42 +1,42 @@
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
-import ProductInCart from '../components/ProductInCart';
+import ProductInCartWithData from '../components/withData/ProductInCartWithData';
 import { connect } from 'react-redux';
 import { selectCurrency } from '../../redux/slices/selectCurrencySlice';
+import { currencySymbolsData, homeLink } from '../components/constants';
 
 class Cart extends PureComponent {
   render() {
-    const obj = this.props.cartSlice.items;
-    const currency = ['$', '£', 'A$', '¥', '₽'];
-    const cartList = [];
-    let price = 0;
-    for (let i in obj) {
-      price += obj[i].count * obj[i].price[this.props.selectCurrencySlice.symbol].amount;
-    }
-    const tax = (price * 0.21).toFixed(2);
-    const finalPrice = (price * 1.21).toFixed(2);
-    for (let i in obj) {
-      cartList.push(obj[i]);
-    }
+    const currencySymbols = currencySymbolsData;
+    const taxPercent = 0.21;
+    const totalTaxPercent = taxPercent + 1;
+    const finalPrice = this.props.cartSlice
+      .reduce((a, item) => {
+        return (
+          item.price[this.props.selectCurrencySlice.symbol].amount * item.count * totalTaxPercent +
+          a
+        );
+      }, 0)
+      .toFixed(2);
+    const tax = (finalPrice * taxPercent).toFixed(2);
     return (
       <>
         <div className="fw-700 fs-42 mt-80 mb-55">CART</div>;
-        {cartList.length === 0 ? (
+        {this.props.cartSlice.length === 0 ? (
           <div className="emptyCart fw-400 fs-24">
             Nothing here for now...
-            <Link to="/">
+            <Link to={homeLink}>
               <button className="button fs-24">Click to return to shop</button>
             </Link>
           </div>
         ) : (
           <div>
-            {cartList.map((obj) => {
-              const key = Object.keys(obj)[0];
-              price = obj.price * obj.count;
+            {this.props.cartSlice.map((cartItem, index) => {
               return (
-                <ProductInCart
-                  id={obj[key]}
-                  key={obj[key]}
+                <ProductInCartWithData
+                  id={cartItem.id}
+                  itemIndex={index}
+                  key={cartItem.id}
                   currency={this.props.selectCurrencySlice.symbol}
                 />
               );
@@ -45,7 +45,7 @@ class Cart extends PureComponent {
               <div className="flex cart__order__item">
                 Tax 21%:
                 <span className="fw-700 fs-24 lh-28">
-                  {currency[this.props.selectCurrencySlice.symbol]}
+                  {currencySymbols[this.props.selectCurrencySlice.symbol]}
                   {tax}
                 </span>
               </div>
@@ -55,7 +55,7 @@ class Cart extends PureComponent {
               <div className="flex cart__order__item">
                 Total:
                 <span className="fw-700 fs-24 lh-28">
-                  {currency[this.props.selectCurrencySlice.symbol]}
+                  {currencySymbols[this.props.selectCurrencySlice.symbol]}
                   {finalPrice}
                 </span>
               </div>

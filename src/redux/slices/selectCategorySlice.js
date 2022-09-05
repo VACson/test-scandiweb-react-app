@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const selectCategorySlice = createSlice({
-  name: 'SELECT_CATEGORY',
+  name: 'SET_CATEGORY',
   initialState,
   reducers: {
     selectCategory: (state, action) => {

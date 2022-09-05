@@ -1,69 +1,24 @@
 import React, { PureComponent } from 'react';
 import classNames from 'classnames';
-
-import gql from 'graphql-tag';
-import { graphql, Query } from 'react-apollo';
-
 import Button from './Button';
+import { currencySymbolsData } from './constants';
 
-const getBooksQuery = gql`
-  query getProd($id: String!) {
-    product(id: $id) {
-      id
-      name
-      inStock
-      gallery
-      description
-      category
-      attributes {
-        id
-        name
-        type
-        items {
-          displayValue
-          id
-          value
-        }
-      }
-      prices {
-        currency {
-          symbol
-          label
-        }
-        amount
-      }
-      brand
-    }
-  }
-`;
-class ProductFullWithQuery extends PureComponent {
-  render() {
-    return (
-      <Query query={getBooksQuery} variables={{ id: this.props.ID }}>
-        {({ loading, error, data }) => {
-          if (loading) return <p>Loading</p>;
-          if (error) return <p>{console.log(error)}</p>;
-          return <ProductFull data={this.props.data} currency={this.props.currency} />;
-        }}
-      </Query>
-    );
-  }
-}
 class ProductFull extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      currentImage: 0,
+      currentImage: null,
       currentRadio: {},
     };
     this.createMarkup.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
   createMarkup() {
     return { __html: this.props.data.product.description };
   }
-  handleChange = (e) => {
-    const { name, value } = e.target;
+  changePicture = (i) => {
+    this.setState(() => ({ currentImage: i }));
+  };
+  handleChange = (name, value) => {
     this.setState((prevState) => ({
       currentRadio: {
         ...prevState.currentRadio,
@@ -72,7 +27,8 @@ class ProductFull extends PureComponent {
     }));
   };
   componentDidMount() {
-    if (this.props.data.product) {
+    // set the initial state
+    this.props.data.product.inStock &&
       this.props.data.product.attributes.map((attribute) => {
         return this.setState((prevState) => ({
           currentRadio: {
@@ -81,10 +37,12 @@ class ProductFull extends PureComponent {
           },
         }));
       });
-    }
   }
   render() {
-    const chooseCurrency = ['$', '£', 'A$', '¥', '₽'];
+    const chosenCurrency = currencySymbolsData[[this.props.currency]];
+    const allAttributes = this.props.data.product.attributes;
+    const currentImageIndex = this.state.currentImage === null ? 0 : this.state.currentImage;
+
     return (
       <div className="productpage__container">
         <div className="flex flex-column sidegallery">
@@ -92,114 +50,74 @@ class ProductFull extends PureComponent {
             return (
               <img
                 src={gallery}
-                width={80}
                 key={index}
                 className="sidegallery__image"
-                onClick={() => this.setState(() => ({ currentImage: index }))}
+                onClick={() => this.changePicture(index)}
                 alt={gallery}
-                style={{ objectFit: 'cover' }}
               />
             );
           })}
         </div>
         <img
-          src={this.props.data.product.gallery[this.state.currentImage]}
-          width={610}
-          height={511}
+          src={this.props.data.product.gallery[currentImageIndex]}
           className="productpage__container__img"
-          alt="main"
+          alt="fullsizeproduct"
         />
-
         <div className="flex flex-column productpage__container__sidetext">
           <div className="flex--full">
-            <div className="fs-30 fw-600 mb-16">{this.props.data.product.name}</div>
-            <div className="fs-24 fw-400 mb-44">{this.props.data.product.brand}</div>
+            <div className="fs-30 fw-600 mb-16">{this.props.data.product.brand}</div>
+            <div className="fs-24 fw-400 mb-44">{this.props.data.product.name}</div>
           </div>
           {this.props.data.product.attributes.map((attribute, index) => {
             const attributeIndex = index;
-
-            if (this.props.data.product.attributes[attributeIndex].type === 'swatch') {
-              return (
-                <div
-                  className="flex--full"
-                  key={this.props.data.product.attributes[attributeIndex].name}>
-                  <div className="fs-18 fw-700 roboto mb-8 ttu">
-                    {this.props.data.product.attributes[attributeIndex].name}:
-                  </div>
-                  <div className="flex">
-                    {this.props.data.product.attributes[attributeIndex].items.map(
-                      (items, index) => {
-                        return (
-                          <label
-                            className={classNames('colorpick  fs-16 fw-400', {
-                              'colorpick--active': this.state.currentRadio.Color === items.value,
-                            })}
-                            key={this.props.data.product.attributes[attributeIndex].name.concat(
-                              items.value,
-                            )}
-                            onClick={this.handleChange}
-                            style={{
-                              backgroundColor: `${items.value}`,
-                            }}
-                            htmlFor={this.props.data.product.attributes[attributeIndex].id__name}>
-                            <input
-                              type="radio"
-                              id={this.props.data.product.attributes[attributeIndex].id__name}
-                              className="radio"
-                              onChange={this.handleChange}
-                              name={this.props.data.product.attributes[attributeIndex].name}
-                              value={items.value}
-                              defaultChecked={index === 0}></input>
-                          </label>
-                        );
-                      },
-                    )}
-                  </div>
+            return (
+              <div
+                className="flex--full mb-24"
+                key={this.props.data.product.name.concat(attribute.name)}>
+                <div className="fs-18 fw-700 roboto mb-8 ttu">
+                  {allAttributes[attributeIndex].name}:
                 </div>
-              );
-            } else if (this.props.data.product.attributes[attributeIndex].type === 'text') {
-              return (
-                <div
-                  className="flex--full"
-                  key={this.props.data.product.attributes[attributeIndex].name.concat(
-                    this.props.data.product.attributes[attributeIndex].name,
-                  )}>
-                  <div className="fs-18 fw-700 roboto mb-8 ttu">
-                    {this.props.data.product.attributes[attributeIndex].name}:
-                  </div>
-                  <div className="flex">
-                    {this.props.data.product.attributes[attributeIndex].items.map(
-                      (items, index) => {
-                        var name = `${this.props.data.product.attributes[attributeIndex].name}`;
-                        return (
-                          <label
-                            className={classNames('sizepick sourcesans fs-16 fw-400', {
-                              'sizepick--active': this.state.currentRadio[name] === items.value,
-                            })}
-                            key={items.id.concat(name.concat(items.value))}
-                            htmlFor={items.id__name}>
-                            <input
-                              className="radio"
-                              type="radio"
-                              id={items.id__name}
-                              value={items.value}
-                              name={this.props.data.product.attributes[attributeIndex].name}
-                              onChange={this.handleChange}
-                              defaultChecked={index === 0}></input>
-                            {items.value}
-                          </label>
-                        );
-                      },
-                    )}
-                  </div>
+                <div className="flex">
+                  {allAttributes[attributeIndex].items.map((items, index) => {
+                    const swatchColor =
+                      attribute.type === 'swatch' ? `swatch__${items.displayValue}` : '';
+                    return (
+                      <label
+                        className={classNames(
+                          `${attribute.type}pick ${attribute.type}pick fs-16 fw-400 ${swatchColor}`,
+                          {
+                            [`${attribute.type}pick--active`]:
+                              this.state.currentRadio[attribute.id] === items.value,
+                          },
+                          this.props.data.product.inStock === false &&
+                            `${attribute.type}pick--disabled`,
+                        )}
+                        key={allAttributes[attributeIndex].name.concat(
+                          items.value.concat(this.props.id).concat(attribute.name),
+                        )}
+                        onClick={() =>
+                          this.handleChange(allAttributes[attributeIndex].name, items.value)
+                        }>
+                        <input
+                          type="radio"
+                          className={classNames(
+                            'radio',
+                            this.props.data.product.inStock === false && 'radio--disabled',
+                          )}
+                          name={allAttributes[attributeIndex].name}
+                          value={items.value}
+                          defaultChecked={index === 0}></input>
+                        {attribute.type === 'text' && items.value}
+                      </label>
+                    );
+                  })}
                 </div>
-              );
-            }
-            return null;
-          })}{' '}
-          <div className="flex--full roboto fs-18 fw-700 mt-36 mb-10">PRICE:</div>
+              </div>
+            );
+          })}
+          <div className="flex--full roboto fs-18 fw-700 mt-14 mb-10">PRICE:</div>
           <div className="product__description__price flex--full fs-24 fw-700">
-            {chooseCurrency[this.props.currency]}
+            {chosenCurrency}
             {this.props.data.product.prices[this.props.currency].amount}
           </div>
           <Button
@@ -207,7 +125,7 @@ class ProductFull extends PureComponent {
             id={this.props.data.product.id}
             attr={this.props.data.product.attributes}
             price={this.props.data.product.prices}
-            count={1}>
+            inStock={this.props.data.product.inStock}>
             ADD TO CART
           </Button>
           <div
@@ -218,12 +136,4 @@ class ProductFull extends PureComponent {
     );
   }
 }
-export default graphql(getBooksQuery, {
-  options: (props) => {
-    return {
-      variables: {
-        id: props.ID,
-      },
-    };
-  },
-})(ProductFullWithQuery);
+export default ProductFull;
