@@ -72,9 +72,11 @@
   &__description {
     font-size: 18px;
     font-weight: 300;
+    font-weight: 300;
     line-height: 160%;
     &__price {
       font-weight: 500;
+      font-size: 18px;
       font-size: 18px;
     }
     &__text {
@@ -89,6 +91,7 @@
   margin: 80px 0;
   display: flex;
   align-items: flex-start;
+  justify-content: space-between;
   justify-content: space-between;
   &__img {
     width: 610px;
