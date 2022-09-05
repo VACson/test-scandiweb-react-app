@@ -1,10 +1,16 @@
 .header {
   display: flex;
+  position: absolute;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
+  top: 0;
   height: 80px;
-  width: 100%;
+  width: 99vw;
+  z-index: 2;
+  margin-left: -100px;
+  padding: 0 100px;
+  // object-fit: cover;
   background-color: #fff;
   &--item {
     display: flex;
@@ -18,11 +24,10 @@
     font-size: 16px;
     font-weight: 400;
     line-height: 120%;
-    text-transform: uppercase;
     &--logo {
       width: 50%;
       height: 32px;
-      margin-right: 100px;
+      // margin-right: 100px;
     }
     &-active {
       color: #5ece7b;
@@ -51,14 +56,26 @@
   }
   &__popup {
     overflow-y: auto;
-    margin: 0 10px;
-    z-index: 2;
+    overflow-x: hidden;
+    text-align: start;
+    margin: 0;
     width: 325px;
     max-height: 600px;
     position: absolute;
     background-color: #fff;
     top: 78px;
-    right: 72px;
+    right: 100px;
+    z-index: 3;
+    padding: 32px 0 32px 16px;
+    &__total {
+      width: 293px;
+      margin-bottom: 32px;
+    }
+    &__buttons {
+      // position: absolute;
+      width: 293px;
+      // padding: 32px 16px;
+    }
   }
 }
 .modal {
@@ -66,8 +83,11 @@
   opacity: 22%;
   z-index: 1;
   position: fixed;
-  top: 78px;
+  top: 0;
   left: 0;
   height: 100%;
   width: 100%;
+  &--transparent {
+    opacity: 0;
+  }
 }

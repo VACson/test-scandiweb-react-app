@@ -15,7 +15,7 @@ class App extends PureComponent {
       <ApolloProvider client={client}>
         <BrowserRouter>
           <Header />
-          <Route exact path={'/'} component={Home} />
+          <Route exact path="/" component={Home} />
           <Route path="/cart" component={Cart} />
           <Route path="/product/:slug" component={ProductPage} />
         </BrowserRouter>

@@ -1,11 +1,10 @@
+@import 'utils/all';
 @import 'components/all';
-@import 'fonts';
 @import 'normalize';
-
+@import 'fonts';
 body {
-  // max-width: 1440px;
   width: 99vw;
   margin: 0;
-  padding: 0 100px;
+  padding: 80px 100px;
   overflow-x: hidden;
 }

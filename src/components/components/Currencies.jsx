@@ -1,32 +1,33 @@
 import React, { PureComponent } from 'react';
-import { gql } from 'apollo-boost';
-import { graphql } from 'react-apollo';
-import Currency from './Currency';
-
-const getBooksQuery = gql`
-  {
-    currencies {
-      label
-      symbol
-    }
-  }
-`;
+import { connect } from 'react-redux';
+import { selectCurrency } from '../../redux/slices/selectCurrencySlice';
 
 class Currencies extends PureComponent {
-  displayCurrencies() {
-    var data = this.props.data;
-
-    if (data.loading) {
-      return <div>Loading...</div>;
-    } else {
-      return data.currencies.map((currency, index) => {
-        return <Currency currency={currency} key={index} symbolIndex={index} />;
-      });
-    }
+  constructor(props) {
+    super(props);
+    this.onClick = this.onCurrencyClick.bind(this);
   }
+  onCurrencyClick = (i) => {
+    this.props.selectCurrency(i).toString();
+  };
   render() {
-    return <div>{this.displayCurrencies()}</div>;
+    return (
+      <div>
+        {this.props.data.currencies.map((currency, index) => (
+          <div
+            key={currency.label}
+            className="fw-500 flex flex-row currencies__popup__item"
+            onClick={() => this.onCurrencyClick(index)}>
+            {currency.symbol}&#160;
+            {currency.label}
+          </div>
+        ))}
+      </div>
+    );
   }
 }
-
-export default graphql(getBooksQuery)(Currencies);
+const mapStateToProps = (state) => ({
+  selectCurrencySlice: state.selectCurrencySlice,
+});
+const mapDispatchToProps = () => ({ selectCurrency });
+export default connect(mapStateToProps, mapDispatchToProps())(Currencies);

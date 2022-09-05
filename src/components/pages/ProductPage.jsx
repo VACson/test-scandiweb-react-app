@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import { selectCurrency } from '../../redux/slices/selectCurrencySlice';
 import { withRouter } from 'react-router';
 
-import ProductFullWithQuery from '../components/ProductFull';
+import ProductFullWithData from '../components/withData/ProductFullWithData';
 class ProductPage extends PureComponent {
   render() {
     const productId = this.props.match.params.slug;
-    return <ProductFullWithQuery ID={productId} currency={this.props.selectCurrencySlice.symbol} />;
+    return <ProductFullWithData ID={productId} currency={this.props.selectCurrencySlice.symbol} />;
   }
 }
 const mapStateToProps = (state) => ({
